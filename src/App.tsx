@@ -8,7 +8,7 @@ const App = () => {
     <Provider store={store}>
       <div className="">
         <h1 className="text-3xl">React Redux</h1>
-        <Counter />
+        <Counter id={1} />
       </div>
     </Provider>
   );

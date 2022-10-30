@@ -15,11 +15,16 @@ type CounterProps = {
   counter: number;
   increment: any;
   decrement: any;
+  id: number;
 };
 
-const Counter = ({ counter, increment, decrement }: CounterProps) => {
-  const [customValue, setCustomValue] = useState(1);
+type ownPropsType = {
+  id: number;
+};
 
+const Counter = ({ counter, increment, decrement, id }: CounterProps) => {
+  const [customValue, setCustomValue] = useState(1);
+  console.log('Accessing id from Counter component: ', id);
   return (
     <div className="bg-gray-50 w-11/12 max-w-[600px] mx-auto relative">
       <div className="flex flex-col justify-center items-center gap-4 py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
@@ -91,7 +96,8 @@ const Counter = ({ counter, increment, decrement }: CounterProps) => {
   );
 };
 
-const mapStateToProps = (state: CounterState) => {
+const mapStateToProps = (state: CounterState, ownProps: ownPropsType) => {
+  console.log('Accessing ownProps from mapStateToProps: id-', ownProps);
   return {
     counter: state.value,
   };
