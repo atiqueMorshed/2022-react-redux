@@ -1,14 +1,14 @@
 import { INCREMENT, DECREMENT } from './action.types';
 
 // Type Definitions
-interface CounterState {
+export type CounterState = {
   value: number;
-}
+};
 
-interface CounterAction {
+type CounterAction = {
   type: string;
   payload: number;
-}
+};
 
 // Params
 const initialState: CounterState = {
@@ -21,13 +21,13 @@ const counterReducer = (state = initialState, action: CounterAction) => {
     case INCREMENT:
       return {
         ...state,
-        value: state.value + 1,
+        value: state.value + action.payload,
       };
 
     case DECREMENT:
       return {
         ...state,
-        value: state.value - 1,
+        value: state.value - action.payload,
       };
 
     default:

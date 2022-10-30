@@ -1,24 +1,43 @@
-import React from 'react';
+// Packages
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
+// functions
+import { increment, decrement } from '../redux/counter/actions';
+
+// Definitions
+import { CounterState } from '../redux/counter/counterReducer';
+
+// Components
 import Tooltip from './Tooltip';
 
-const Counter = () => {
+type CounterProps = {
+  counter: number;
+  increment: any;
+  decrement: any;
+};
+
+const Counter = ({ counter, increment, decrement }: CounterProps) => {
+  const [customValue, setCustomValue] = useState(1);
+
   return (
     <div className="bg-gray-50 w-11/12 max-w-[600px] mx-auto relative">
       <div className="flex flex-col justify-center items-center gap-4 py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
         <h2 className="flex items-end gap-2">
           <span className="text-4xl md:text-7xl font-bold tracking-tight text-gray-900">
-            123
+            {counter}
           </span>
           <span className="text-lg font-medium">unit(s)</span>
         </h2>
         <div className="interaction">
           <div className="relative z-0 mb-6 w-full group">
             <input
-              type="text"
+              type="number"
               name="floating_customValue"
               id="floating_customValue"
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              onChange={(e) => setCustomValue(parseInt(e.target.value))}
               required
             />
             <label
@@ -30,12 +49,18 @@ const Counter = () => {
           </div>
           <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div className="inline-flex rounded-md shadow">
-              <button className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base text-white font-bold hover:bg-indigo-700">
+              <button
+                onClick={() => increment(customValue)}
+                className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base text-white font-bold hover:bg-indigo-700"
+              >
                 Increment
               </button>
             </div>
             <div className="ml-3 inline-flex rounded-md shadow">
-              <button className="inline-flex items-center justify-center rounded-md border border-transparent bg-pink-700 px-5 py-3 text-base font-bold text-white hover:bg-pink-800">
+              <button
+                onClick={() => decrement(customValue)}
+                className="inline-flex items-center justify-center rounded-md border border-transparent bg-pink-700 px-5 py-3 text-base font-bold text-white hover:bg-pink-800"
+              >
                 Decrement
               </button>
             </div>
@@ -66,4 +91,17 @@ const Counter = () => {
   );
 };
 
-export default Counter;
+const mapStateToProps = (state: CounterState) => {
+  return {
+    counter: state.value,
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    increment: (value = 1) => dispatch(increment(value)),
+    decrement: (value = 1) => dispatch(decrement(value)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
