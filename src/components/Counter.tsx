@@ -1,29 +1,32 @@
 // Packages
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 // functions
 import { increment, decrement } from '../redux/counter/actions';
-
 // Type Definitions
 import { StateType } from '../redux/state.type';
-
 // Components
 import Tooltip from './Tooltip';
 
+// Code
+// Type Definitions
 type CounterProps = {
-  counter: number;
-  increment: any;
-  decrement: any;
   id: number;
 };
 
-type ownPropsType = {
-  id: number;
-};
-
-const Counter = ({ counter, increment, decrement, id }: CounterProps) => {
+const Counter = (id: CounterProps) => {
   const [customValue, setCustomValue] = useState(1);
+
+  const counter = useSelector((state: StateType) => state.counter.value);
+  const dispatch = useDispatch();
+
+  const incrementHandler = (value: number) => {
+    dispatch(increment(value));
+  };
+  const decrementHandler = (value: number) => {
+    dispatch(decrement(value));
+  };
+
   console.log('Accessing id from Counter component: ', id);
   return (
     <div className="bg-gray-50 w-11/12 max-w-[600px] mx-auto relative">
@@ -55,7 +58,7 @@ const Counter = ({ counter, increment, decrement, id }: CounterProps) => {
           <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
             <div className="inline-flex rounded-md shadow">
               <button
-                onClick={() => increment(customValue)}
+                onClick={() => incrementHandler(customValue)}
                 className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base text-white font-bold hover:bg-indigo-700"
               >
                 Increment
@@ -63,7 +66,7 @@ const Counter = ({ counter, increment, decrement, id }: CounterProps) => {
             </div>
             <div className="ml-3 inline-flex rounded-md shadow">
               <button
-                onClick={() => decrement(customValue)}
+                onClick={() => decrementHandler(customValue)}
                 className="inline-flex items-center justify-center rounded-md border border-transparent bg-pink-700 px-5 py-3 text-base font-bold text-white hover:bg-pink-800"
               >
                 Decrement
@@ -96,18 +99,4 @@ const Counter = ({ counter, increment, decrement, id }: CounterProps) => {
   );
 };
 
-const mapStateToProps = (state: StateType, ownProps: ownPropsType) => {
-  console.log('Accessing ownProps from mapStateToProps: id-', ownProps);
-  return {
-    counter: state.counter.value,
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    increment: (value = 1) => dispatch(increment(value)),
-    decrement: (value = 1) => dispatch(decrement(value)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default Counter;
