@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 // functions
 import { increment, decrement } from '../redux/counter/actions';
 
-// Definitions
-import { CounterState } from '../redux/counter/counterReducer';
+// Type Definitions
+import { StateType } from '../redux/state.type';
 
 // Components
 import Tooltip from './Tooltip';
@@ -96,10 +96,10 @@ const Counter = ({ counter, increment, decrement, id }: CounterProps) => {
   );
 };
 
-const mapStateToProps = (state: CounterState, ownProps: ownPropsType) => {
+const mapStateToProps = (state: StateType, ownProps: ownPropsType) => {
   console.log('Accessing ownProps from mapStateToProps: id-', ownProps);
   return {
-    counter: state.value,
+    counter: state.counter.value,
   };
 };
 
