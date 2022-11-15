@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
+
 import {
   ADD,
   REMOVE,
@@ -13,9 +15,8 @@ const initialState: todoStateType = [
   {
     todoId: 'b5461273-42c5-44a5-bbae-8cc579d34e85',
     todoContent: 'Add your Todos here. You can also remove this one!',
-    date: new Date().toISOString(),
+    date: moment().format('h:mm A, MMMM Do'),
     isComplete: false,
-    color: 'green',
   },
 ] as todoStateType;
 
@@ -30,7 +31,7 @@ const todoReducer = (
         {
           todoId: uuidv4(),
           todoContent: action.payload,
-          date: new Date().toISOString(),
+          date: moment().format('h:mm A, MMMM Do'),
           isComplete: false,
         },
       ];

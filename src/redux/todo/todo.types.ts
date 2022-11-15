@@ -9,10 +9,12 @@ export type todoActionType = {
   payload?: any;
 };
 
-export type todoStateType = {
+export type todoType = {
   todoId: todoIdType;
   todoContent: todoContentType;
   date: string;
   isComplete: boolean;
   color?: todoColorType;
-}[];
+};
+
+export type todoStateType = todoType[];
