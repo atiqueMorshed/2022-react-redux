@@ -1,15 +1,8 @@
 import { CHANGECOLOR } from './todo.action-type';
-export type todoContentType = {
-  todoContent: string;
-};
 
-export type todoIdType = {
-  todoId: string;
-};
-
-export type todoColorType = {
-  color: string;
-};
+export type todoIdType = string;
+export type todoContentType = string;
+export type todoColorType = string;
 
 export type todoActionType = {
   type: string;
