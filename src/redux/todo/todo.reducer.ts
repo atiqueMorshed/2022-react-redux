@@ -17,6 +17,7 @@ const initialState: todoStateType = [
     todoContent: 'Add your Todos here. You can also remove this one!',
     date: moment().format('h:mm A, MMMM Do'),
     isComplete: false,
+    color: 'GREEN',
   },
 ] as todoStateType;
 
@@ -33,6 +34,7 @@ const todoReducer = (
           todoContent: action.payload,
           date: moment().format('h:mm A, MMMM Do'),
           isComplete: false,
+          color: 'GREEN',
         },
       ];
 

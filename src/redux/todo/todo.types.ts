@@ -2,6 +2,8 @@ import { CHANGECOLOR } from './todo.action-type';
 
 export type todoIdType = string;
 export type todoContentType = string;
+export type dateType = string;
+export type isCompleteType = boolean;
 export type todoColorType = string;
 
 export type todoActionType = {
@@ -14,7 +16,7 @@ export type todoType = {
   todoContent: todoContentType;
   date: string;
   isComplete: boolean;
-  color?: todoColorType;
+  color: todoColorType;
 };
 
 export type todoStateType = todoType[];

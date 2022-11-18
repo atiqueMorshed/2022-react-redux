@@ -14,3 +14,6 @@ export type AppDispatch = typeof store.dispatch;
 // Selectors And Dispatch
 export const useTodosSelector = () =>
   useSelector((state: RootState) => state.todos);
+
+export const useFilterSelector = () =>
+  useSelector((state: RootState) => state.filter);

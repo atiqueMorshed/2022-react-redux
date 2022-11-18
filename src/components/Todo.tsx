@@ -36,23 +36,23 @@ const Todo = ({ todoId, todoContent, isComplete, date, color }: todoType) => {
       </div>
 
       <div
-        onClick={() => handleChangeColor('green')}
+        onClick={() => handleChangeColor('GREEN')}
         className={`${
-          color === 'green' && 'bg-green-500'
+          color === 'GREEN' && 'bg-green-500'
         } flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-green-500 hover:bg-green-500`}
       ></div>
 
       <div
-        onClick={() => handleChangeColor('yellow')}
+        onClick={() => handleChangeColor('YELLOW')}
         className={`${
-          color === 'yellow' && 'bg-yellow-500'
+          color === 'YELLOW' && 'bg-yellow-500'
         } flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-yellow-500 hover:bg-yellow-500`}
       ></div>
 
       <div
-        onClick={() => handleChangeColor('red')}
+        onClick={() => handleChangeColor('RED')}
         className={`${
-          color === 'red' && 'bg-red-500'
+          color === 'RED' && 'bg-red-500'
         } flex-shrink-0 h-4 w-4 rounded-full border-2 ml-auto cursor-pointer border-red-500 hover:bg-red-500`}
       ></div>
 
