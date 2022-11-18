@@ -15,7 +15,7 @@ const initialState: todoStateType = [
   {
     todoId: 'b5461273-42c5-44a5-bbae-8cc579d34e85',
     todoContent: 'Add your Todos here. You can also remove this one!',
-    date: moment().format('h:mm A, MMMM Do'),
+    date: moment().format(),
     isComplete: false,
     color: 'GREEN',
   },
@@ -32,7 +32,7 @@ const todoReducer = (
         {
           todoId: uuidv4(),
           todoContent: action.payload,
-          date: moment().format('h:mm A, MMMM Do'),
+          date: moment().format(),
           isComplete: false,
           color: 'GREEN',
         },

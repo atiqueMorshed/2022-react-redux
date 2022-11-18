@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import moment from 'moment';
 import cancelImage from '../assets/images/cancel.png';
 import { changeColor, remove, toggleComplete } from '../redux/todo/todo.action';
 import { todoColorType, todoType } from '../redux/todo/todo.types';
@@ -31,7 +32,7 @@ const Todo = ({ todoId, todoContent, isComplete, date, color }: todoType) => {
           {todoContent}
         </div>
         <div className="text-xs bg-gray-700 text-gray-200 w-fit py-[1px] px-2 rounded-xl">
-          Added on {date}
+          Added on {moment(date).format('MMMM Do, h:mm A')}
         </div>
       </div>
 

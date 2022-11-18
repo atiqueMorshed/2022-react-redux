@@ -39,6 +39,7 @@ export default function TodoList() {
       {todoList
         .filter(filterByCompleteStatus)
         .filter(filterByColorStatus)
+        .sort((a, b) => moment(b.date).diff(moment(a.date)))
         .map((todo) => (
           <Todo key={todo.todoId} {...todo} />
         ))}
