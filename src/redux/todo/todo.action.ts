@@ -5,10 +5,23 @@ import {
   CLEARCOMPLETE,
   TOGGLECOMPLETE,
   CHANGECOLOR,
+  LOAD,
 } from './todo.action-type';
 
 // Type Definitions
-import { todoColorType, todoContentType, todoIdType } from './todo.types';
+import {
+  todoColorType,
+  todoContentType,
+  todoIdType,
+  todoStateType,
+} from './todo.types';
+
+export const load = (todos: todoStateType) => {
+  return {
+    type: LOAD,
+    payload: todos,
+  };
+};
 
 export const add = (todoContent: todoContentType) => {
   return {

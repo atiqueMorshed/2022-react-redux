@@ -8,24 +8,20 @@ import {
   CLEARCOMPLETE,
   TOGGLECOMPLETE,
   CHANGECOLOR,
+  LOAD,
 } from './todo.action-type';
 import { todoActionType, todoStateType } from './todo.types';
 
-const initialState: todoStateType = [
-  {
-    todoId: 'b5461273-42c5-44a5-bbae-8cc579d34e85',
-    todoContent: 'Add your Todos here. You can also remove this one!',
-    date: moment().format(),
-    isComplete: false,
-    color: 'GREEN',
-  },
-] as todoStateType;
+const initialState: todoStateType = [] as todoStateType;
 
 const todoReducer = (
   state: todoStateType = initialState,
   action: todoActionType
 ) => {
   switch (action.type) {
+    case LOAD:
+      return action.payload;
+
     case ADD:
       return [
         ...state,

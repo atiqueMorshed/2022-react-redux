@@ -1,0 +1,32 @@
+{
+  "todos": [
+    {
+      "todoId": "b5461273-42c5-44a5-bbae-8cc579d34e81",
+      "todoContent": "Add your Todos here. You can also remove this one!",
+      "date": "2022-10-23T19:48:05+06:00",
+      "isComplete": false,
+      "color": "GREEN"
+    },
+    {
+      "todoId": "b5461273-42c5-44a5-bbae-8cc579d34e82",
+      "todoContent": "Add your Todos here. You can also remove this one!",
+      "date": "2022-11-22T18:48:05+06:00",
+      "isComplete": false,
+      "color": "GREEN"
+    },
+    {
+      "todoId": "b5461273-42c5-44a5-bbae-8cc579d34e83",
+      "todoContent": "Add your Todos here. You can also remove this one!",
+      "date": "2022-02-10T13:48:05+06:00",
+      "isComplete": true,
+      "color": "RED"
+    },
+    {
+      "todoId": "b5461273-42c5-44a5-bbae-8cc579d34e85",
+      "todoContent": "Add your Todos here. You can also remove this one!",
+      "date": "2022-04-02T14:48:05+06:00",
+      "isComplete": true,
+      "color": "YELLOW"
+    }
+  ]
+}

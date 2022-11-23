@@ -1,3 +1,4 @@
+export const LOAD = 'todo/load';
 export const ADD = 'todo/add';
 export const REMOVE = 'todo/remove';
 

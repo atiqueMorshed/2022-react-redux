@@ -1,6 +1,12 @@
+import { useEffect } from 'react';
 import moment from 'moment';
+import {
+  useAppDispatch,
+  useFilterSelector,
+  useTodosSelector,
+} from '../redux/store';
 
-import { useFilterSelector, useTodosSelector } from '../redux/store';
+import fetchTodos from '../redux/todo/thunk/loadTodos';
 import Todo from './Todo';
 
 // type Definitions
@@ -9,6 +15,11 @@ import { todoType } from '../redux/todo/todo.types';
 export default function TodoList() {
   const todoList = useTodosSelector();
   const filter = useFilterSelector();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodos);
+  }, [dispatch]);
 
   const filterByCompleteStatus = (todo: todoType) => {
     switch (filter.completeStatus) {
