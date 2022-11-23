@@ -18,22 +18,8 @@
       "id": "b5461273-42c5-44a5-bbae-8cc579d34e85",
       "todoContent": "Gaming",
       "date": "2022-04-02T14:48:05+06:00",
-      "isComplete": true,
-      "color": "YELLOW"
-    },
-    {
-      "id": "50ba3c0b-d06e-4072-b6c7-a3083b83b872",
-      "todoContent": "LOL",
-      "date": "2022-11-23T20:29:13+06:00",
       "isComplete": false,
-      "color": "GREEN"
-    },
-    {
-      "id": "0fbed0e3-58f6-45f8-b245-62712611799a",
-      "todoContent": "TT",
-      "date": "2022-11-23T20:31:47+06:00",
-      "isComplete": false,
-      "color": "GREEN"
+      "color": "RED"
     }
   ]
 }

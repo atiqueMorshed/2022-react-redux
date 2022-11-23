@@ -1,16 +1,19 @@
 import moment from 'moment';
 import cancelImage from '../assets/images/cancel.png';
 import { useTypedDispatch } from '../redux/store';
-import { changeColor, remove, toggleComplete } from '../redux/todo/todo.action';
+import changeColorTodo from '../redux/todo/thunk/changeColorTodo';
+import removeTodo from '../redux/todo/thunk/removeTodo';
+import toggleCompleteTodo from '../redux/todo/thunk/toggleCompleteTodo';
 import { todoColorType, todoType } from '../redux/todo/todo.types';
 
 const Todo = ({ id, todoContent, isComplete, date, color }: todoType) => {
   const dispatch = useTypedDispatch();
 
-  const handleRemove = () => dispatch(remove(id));
-  const handleToggleComplete = () => dispatch(toggleComplete(id));
+  const handleRemove = () => dispatch(removeTodo(id));
+  const handleToggleComplete = () =>
+    dispatch(toggleCompleteTodo(id, isComplete));
   const handleChangeColor = (color: todoColorType) =>
-    dispatch(changeColor(id, color));
+    dispatch(changeColorTodo(id, color));
 
   return (
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
