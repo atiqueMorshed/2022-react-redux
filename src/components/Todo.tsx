@@ -16,7 +16,7 @@ const Todo = ({ todoId, todoContent, isComplete, date, color }: todoType) => {
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">
       <div
         onClick={handleToggleComplete}
-        className="rounded-full bg-white border-2 border-gray-400 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 border-green-500 focus-within:border-green-500"
+        className="rounded-full bg-white border-2 w-5 h-5 flex flex-shrink-0 justify-center items-center mr-2 border-green-500 focus-within:border-green-500"
       >
         <input type="checkbox" className="opacity-0 absolute rounded-full" />
         <svg
@@ -28,11 +28,15 @@ const Todo = ({ todoId, todoContent, isComplete, date, color }: todoType) => {
       </div>
 
       <div className="flex-1">
-        <div className={`select-none ${isComplete ? 'line-through' : ''}`}>
+        <div
+          className={`select-none font-semibold ${
+            isComplete ? 'line-through' : ''
+          }`}
+        >
           {todoContent}
         </div>
-        <div className="text-xs bg-gray-700 text-gray-200 w-fit py-[1px] px-2 rounded-xl">
-          Added on {moment(date).format('MMMM Do, h:mm A')}
+        <div className="text-xs bg-gray-600 border border-gray-700 text-white font-bold w-fit py-[1px] px-2 rounded-xl">
+          {moment(date).format('MMMM Do, h:mm A')}
         </div>
       </div>
 
