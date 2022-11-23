@@ -1,16 +1,16 @@
-import { useDispatch } from 'react-redux';
 import moment from 'moment';
 import cancelImage from '../assets/images/cancel.png';
+import { useTypedDispatch } from '../redux/store';
 import { changeColor, remove, toggleComplete } from '../redux/todo/todo.action';
 import { todoColorType, todoType } from '../redux/todo/todo.types';
 
-const Todo = ({ todoId, todoContent, isComplete, date, color }: todoType) => {
-  const dispatch = useDispatch();
+const Todo = ({ id, todoContent, isComplete, date, color }: todoType) => {
+  const dispatch = useTypedDispatch();
 
-  const handleRemove = () => dispatch(remove(todoId));
-  const handleToggleComplete = () => dispatch(toggleComplete(todoId));
+  const handleRemove = () => dispatch(remove(id));
+  const handleToggleComplete = () => dispatch(toggleComplete(id));
   const handleChangeColor = (color: todoColorType) =>
-    dispatch(changeColor(todoId, color));
+    dispatch(changeColor(id, color));
 
   return (
     <div className="flex justify-start items-center p-2 hover:bg-gray-100 hover:transition-all space-x-4 border-b border-gray-400/20 last:border-0">

@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import tickImage from '../assets/images/double-tick.png';
 import noteImage from '../assets/images/notes.png';
-import { add, clearComplete, completeAll } from '../redux/todo/todo.action';
+import { useTypedDispatch } from '../redux/store';
+import addTodo from '../redux/todo/thunk/addTodo';
+import { clearComplete, completeAll } from '../redux/todo/todo.action';
 const Header = () => {
   const [todoInput, setTodoInput] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
 
   const handleAdd = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    todoInput && dispatch(add(todoInput.toString()));
+    todoInput && dispatch(addTodo(todoInput));
     setTodoInput('');
   };
   const handleCompleteAll = () => dispatch(completeAll());

@@ -11,9 +11,9 @@ import {
 // Type Definitions
 import {
   todoColorType,
-  todoContentType,
   todoIdType,
   todoStateType,
+  todoType,
 } from './todo.types';
 
 export const load = (todos: todoStateType) => {
@@ -23,24 +23,24 @@ export const load = (todos: todoStateType) => {
   };
 };
 
-export const add = (todoContent: todoContentType) => {
+export const add = (todo: todoType) => {
   return {
     type: ADD,
-    payload: todoContent,
+    payload: todo,
   };
 };
 
-export const remove = (todoId: todoIdType) => {
+export const remove = (id: todoIdType) => {
   return {
     type: REMOVE,
-    payload: todoId,
+    payload: id,
   };
 };
 
-export const toggleComplete = (todoId: todoIdType) => {
+export const toggleComplete = (id: todoIdType) => {
   return {
     type: TOGGLECOMPLETE,
-    payload: todoId,
+    payload: id,
   };
 };
 
@@ -56,11 +56,11 @@ export const clearComplete = () => {
   };
 };
 
-export const changeColor = (todoId: todoIdType, color: todoColorType) => {
+export const changeColor = (id: todoIdType, color: todoColorType) => {
   return {
     type: CHANGECOLOR,
     payload: {
-      todoId,
+      id,
       color,
     },
   };

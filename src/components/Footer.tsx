@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import {
   changeColorStatus,
   changeCompleteStatus,
@@ -7,12 +6,16 @@ import {
   colorSatusType,
   completeStatusType,
 } from '../redux/filter/filter.types';
-import { useFilterSelector, useTodosSelector } from '../redux/store';
+import {
+  useFilterSelector,
+  useTodosSelector,
+  useTypedDispatch,
+} from '../redux/store';
 
 const Footer = () => {
   const todos = useTodosSelector();
   const filter = useFilterSelector();
-  const dispatch = useDispatch();
+  const dispatch = useTypedDispatch();
 
   const handleCompleteStatus = (status: completeStatusType) => {
     dispatch(changeCompleteStatus(status));

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import moment from 'moment';
 import {
-  useAppDispatch,
+  useTypedDispatch,
   useFilterSelector,
   useTodosSelector,
 } from '../redux/store';
 
-import fetchTodos from '../redux/todo/thunk/loadTodos';
+import fetchTodos from '../redux/todo/thunk/fetchTodos';
 import Todo from './Todo';
 
 // type Definitions
@@ -15,7 +15,7 @@ import { todoType } from '../redux/todo/todo.types';
 export default function TodoList() {
   const todoList = useTodosSelector();
   const filter = useFilterSelector();
-  const dispatch = useAppDispatch();
+  const dispatch = useTypedDispatch();
 
   useEffect(() => {
     dispatch(fetchTodos);
@@ -52,7 +52,7 @@ export default function TodoList() {
         .filter(filterByColorStatus)
         .sort((a, b) => moment(b.date).diff(moment(a.date)))
         .map((todo) => (
-          <Todo key={todo.todoId} {...todo} />
+          <Todo key={todo.id} {...todo} />
         ))}
     </div>
   );

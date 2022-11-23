@@ -1,6 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-import moment from 'moment';
-
 import {
   ADD,
   REMOVE,
@@ -23,19 +20,10 @@ const todoReducer = (
       return action.payload;
 
     case ADD:
-      return [
-        ...state,
-        {
-          todoId: uuidv4(),
-          todoContent: action.payload,
-          date: moment().format(),
-          isComplete: false,
-          color: 'GREEN',
-        },
-      ];
+      return [...state, action.payload];
 
     case REMOVE:
-      return state.filter((todo) => todo.todoId !== action.payload);
+      return state.filter((todo) => todo.id !== action.payload);
 
     case COMPLETEALL:
       return state.map((todo) => ({
@@ -51,7 +39,7 @@ const todoReducer = (
 
     case TOGGLECOMPLETE:
       return state.map((todo) =>
-        todo.todoId === action.payload
+        todo.id === action.payload
           ? {
               ...todo,
               isComplete: !todo.isComplete,
@@ -61,7 +49,7 @@ const todoReducer = (
 
     case CHANGECOLOR:
       return state.map((todo) =>
-        todo.todoId === action.payload.todoId
+        todo.id === action.payload.id
           ? {
               ...todo,
               color: action.payload.color,
