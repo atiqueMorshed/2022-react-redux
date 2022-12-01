@@ -1,13 +1,27 @@
+import React, { useState } from "react";
+// import { useAppDispatch } from "../app/hooks";
 import tickImage from "../assets/images/double-tick.png";
 import noteImage from "../assets/images/notes.png";
 import plusImage from "../assets/images/plus.png";
+// import { addTodo } from "../features/todo/todoSlice";
 
 export default function Header() {
+	const [inputText, setInputText] = useState("");
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		// useAppDispatch(addTodo("X"));
+	};
 	return (
 		<div>
-			<form className="flex items-center bg-gray-100 px-4 py-4 rounded-md">
+			<form
+				className="flex items-center bg-gray-100 px-4 py-4 rounded-md"
+				onSubmit={handleSubmit}
+			>
 				<img src={noteImage} className="w-6 h-6" alt="Add todo" />
 				<input
+					value={inputText}
+					onChange={(e) => setInputText(e.target.value)}
 					type="text"
 					placeholder="Type your todo"
 					className="w-full text-lg px-4 py-1 border-none outline-none bg-gray-100 text-gray-500"
