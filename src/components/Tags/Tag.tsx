@@ -1,9 +1,13 @@
-import React from "react";
+import { TagsType } from "../../features/tags/tags.types";
 
-const Tag = () => {
+type IProps = {
+	tag: TagsType;
+};
+
+const Tag = ({ tag: { title } }: IProps) => {
 	return (
-		<div className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full cursor-pointer">
-			react
+		<div className="px-4 py-1 text-blue-600 bg-blue-100 rounded-full cursor-pointer">
+			{title}
 		</div>
 	);
 };

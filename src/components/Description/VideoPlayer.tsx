@@ -1,12 +1,16 @@
 import React from "react";
+import { VideoType } from "../../features/video/video.types";
+type IProps = {
+	video: VideoType;
+};
 
-const VideoPlayer = () => {
+const VideoPlayer = ({ video: { title, link } }: IProps) => {
 	return (
 		<iframe
 			width="100%"
 			className="aspect-video"
-			src="https://www.youtube.com/embed/SZMWKCgvaDY"
-			title="YouTube video player"
+			src={link}
+			title={title}
 			allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 			allowFullScreen
 		></iframe>

@@ -15,24 +15,23 @@ const videosSlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		builder.addCase(fetchVideos.pending, (state) => {
-			state.isLoading = true;
-			state.isError = false;
-			state.error = "";
-			state.videoList = [];
-		});
-		builder.addCase(fetchVideos.fulfilled, (state, action) => {
-			state.isLoading = false;
-			state.isError = false;
-			state.error = "";
-			state.videoList = action.payload;
-		});
-		builder.addCase(fetchVideos.rejected, (state, action) => {
-			state.isLoading = false;
-			state.isError = true;
-			state.error = "ERR";
-			state.videoList = [];
-		});
+		builder
+			.addCase(fetchVideos.pending, (state) => {
+				state.isLoading = true;
+				state.isError = false;
+				state.error = "";
+				state.videoList = [];
+			})
+			.addCase(fetchVideos.fulfilled, (state, action) => {
+				state.isLoading = false;
+				state.videoList = action.payload;
+			})
+			.addCase(fetchVideos.rejected, (state, action) => {
+				state.isLoading = false;
+				state.isError = true;
+				state.error = action.error?.message;
+				state.videoList = [];
+			});
 	},
 });
 

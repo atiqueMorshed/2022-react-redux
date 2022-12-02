@@ -1,24 +1,31 @@
 import React from "react";
+import { VideoType } from "../../features/video/video.types";
 import LikeUnlike from "./LikeUnlike";
 
-const VideoDescription = () => {
+type IProps = {
+	video: VideoType;
+};
+
+const VideoDescription = ({
+	video: { title, date, description, likes, unlikes },
+}: IProps) => {
 	return (
 		<div>
 			<h1 className="text-lg font-semibold tracking-tight text-slate-800">
-				Some video title
+				{title}
 			</h1>
-			<div className="pb-4 flex items-center space-between border-b">
+			<div className="flex items-center pb-4 border-b space-between">
 				<h2 className="text-sm leading-[1.7142857] text-slate-600 w-full">
-					Uploaded on 23 Nov 2022
+					Uploaded on {date}
 				</h2>
 
 				{/* Like Unlike */}
-				<LikeUnlike />
+				<LikeUnlike likes={likes} unlikes={unlikes} />
 			</div>
 
 			{/* Video Description */}
 			<div className="mt-4 text-sm text-[#334155] dark:text-slate-400">
-				Some video description here
+				{description}
 			</div>
 		</div>
 	);

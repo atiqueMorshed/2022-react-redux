@@ -1,10 +1,10 @@
 import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
-import videosReducer from "../features/videos/videosSlice";
+import logger from "redux-logger";
+import rootReducer from "./rootReducer";
 
 export const store = configureStore({
-	reducer: {
-		videos: videosReducer,
-	},
+	reducer: rootReducer,
+	middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 export type AppDispatch = typeof store.dispatch;
