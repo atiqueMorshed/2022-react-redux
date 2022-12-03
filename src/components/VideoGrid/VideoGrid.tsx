@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectFilter } from "../../features/filter/filterSlice";
 import { fetchVideos } from "../../features/videos/videos.thunk";
 import { selectVideos } from "../../features/videos/videosSlice";
 import BasicError from "../Error/BasicError";
@@ -9,12 +10,15 @@ import VideoGridItem from "./VideoGridItem";
 const VideoGrid = () => {
 	const { isLoading, videoList, isError, error } =
 		useAppSelector(selectVideos);
+
+	const { tags, search } = useAppSelector(selectFilter);
+
 	const dispatch = useAppDispatch();
 	let content;
 
 	useEffect(() => {
-		dispatch(fetchVideos());
-	}, [dispatch]);
+		dispatch(fetchVideos({ tags, search }));
+	}, [dispatch, tags, search]);
 
 	if (isLoading) content = <Loading />;
 	else if (!isLoading && isError) content = <BasicError error={error} />;

@@ -1,20 +1,41 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useMatch, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
 import searchIcon from "../../assets/search.svg";
+import { searchVideos } from "../../features/filter/filterSlice";
+
 const Navbar = () => {
+	const [searchTerm, setSearchTerm] = useState<string>("");
+	const match = useMatch("/"); // returns boolean
+	const navigate = useNavigate();
+
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		dispatch(searchVideos(searchTerm));
+	}, [dispatch, searchTerm, match, navigate]);
+
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		// If not searching from homepage, redirect to homepage
+		if (!match) navigate("/");
+	};
+
 	return (
-		<nav className="bg-slate-100 shadow-md">
-			<div className="max-w-7xl mx-auto px-5 lg:px-0 flex items-center justify-between py-3">
+		<nav className="shadow-md bg-slate-100">
+			<div className="flex items-center justify-between px-5 py-3 mx-auto max-w-7xl lg:px-0">
 				<Link to="/" className="text-xl font-medium">
 					Redux Toolkit
 				</Link>
-				<div className="border border-slate-200 flex items-center bg-white h-10 px-5 rounded-lg text-sm ring-emerald-200">
-					<form>
+				<div className="flex items-center h-10 px-5 text-sm bg-white border rounded-lg border-slate-200 ring-emerald-200">
+					<form onSubmit={handleSubmit}>
 						<input
-							className="outline-none border-none mr-2"
+							className="mr-2 border-none outline-none"
 							type="search"
 							name="search"
 							placeholder="Search"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
 						/>
 					</form>
 					<img

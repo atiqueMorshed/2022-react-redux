@@ -1,37 +1,44 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { VideoType } from "../../features/video/video.types";
 
-const RelatedVideoListItem = () => {
+type IProps = {
+	video: VideoType;
+};
+
+const RelatedVideoListItem = ({
+	video: { id, thumbnail, title, duration, author, views, date },
+}: IProps) => {
 	const navigate = useNavigate();
 
 	return (
 		<div
-			className="w-full flex flex-row gap-2 mb-4 cursor-pointer"
-			onClick={() => navigate(`/video/2`)}
+			className="flex flex-row w-full gap-2 mb-4 cursor-pointer"
+			onClick={() => navigate(`/video/${id}`)}
 		>
 			<div className="relative w-[168px] h-[94px] flex-none duration-300 hover:scale-[1.03]">
 				<img
-					src="https://i3.ytimg.com/vi/Xy5KAHD2uak/maxresdefault.jpg"
+					src={thumbnail}
 					className="object-cover"
 					alt="Some video title"
 				/>
 
-				<p className="absolute right-2 bottom-2 bg-gray-900 text-gray-100 text-xs px-1 py">
-					12:10
+				<p className="absolute px-1 text-xs text-gray-100 bg-gray-900 right-2 bottom-2 py">
+					{duration}
 				</p>
 			</div>
 
 			<div className="flex flex-col w-full">
 				<div>
-					<p className="text-slate-900 text-sm font-semibold">
-						Video Title
+					<p className="text-sm font-semibold text-slate-900">
+						{title}
 					</p>
 				</div>
-				<div className="text-gray-400 text-xs mt-2 hover:text-gray-600">
-					Author
+				<div className="mt-2 text-xs text-gray-400 hover:text-gray-600">
+					{author}
 				</div>
-				<p className="text-gray-400 text-xs mt-1">
-					100K views . 23 Oct 2022
+				<p className="mt-1 text-xs text-gray-400">
+					{views} views . {date}
 				</p>
 			</div>
 		</div>

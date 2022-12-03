@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { fetchVideos } from "../../features/videos/videos.thunk";
-import { selectVideos } from "../../features/videos/videosSlice";
+import { fetchRelatedVideos } from "../../features/relatedVideos/relatedVideos.thunk";
+import { selectRelatedVideos } from "../../features/relatedVideos/relatedVideosSlice";
 import RelatedVideoListItem from "./RelatedVideoListItem";
 
 type IProps = {
@@ -10,16 +10,22 @@ type IProps = {
 };
 
 const RelatedVideoList = ({ currentVideoId, currentVideoTags }: IProps) => {
-	const videos = useAppSelector(selectVideos);
 	const dispatch = useAppDispatch();
+	const { videoList } = useAppSelector(selectRelatedVideos);
 
 	useEffect(() => {
-		dispatch(fetchVideos());
-	}, [dispatch]);
+		dispatch(
+			fetchRelatedVideos({ tags: currentVideoTags, id: currentVideoId })
+		);
+	}, [dispatch, currentVideoId, currentVideoTags]);
 
 	return (
 		<div className="col-span-full lg:col-auto max-h-[570px] overflow-y-auto">
-			<RelatedVideoListItem />
+			{videoList.length > 0
+				? videoList.map((video) => (
+						<RelatedVideoListItem key={video.id} video={video} />
+				  ))
+				: "No related videos found!"}
 		</div>
 	);
 };
