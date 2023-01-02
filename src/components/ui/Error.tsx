@@ -1,7 +1,11 @@
-export default function Error() {
+type iProps = {
+	message: string;
+};
+
+export default function Error({ message }: iProps) {
 	return (
-		<div className="w-full flex items-center justify-center h-10 max-w-7xl mx-auto p-2 text-red-700 bg-red-100 col-span-12">
-			There was an error occured!
+		<div className="flex items-center justify-center w-full h-10 col-span-12 p-2 mx-auto text-red-700 bg-red-100 max-w-7xl">
+			{message}
 		</div>
 	);
 }
