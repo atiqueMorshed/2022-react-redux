@@ -15,3 +15,8 @@ export type VideoType = {
 };
 
 export type VideosType = VideoType[];
+
+export type EditVideoIProp = {
+	id: number;
+	video: VideoType;
+};

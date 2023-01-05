@@ -1,31 +1,34 @@
 import { Link } from "react-router-dom";
+import { VideoType } from "../../../features/types";
 
-export default function RelatedVideo() {
+type iProps = {
+	video: VideoType;
+};
+
+export default function RelatedVideo({
+	video: { id, title, duration, author, views, date, thumbnail },
+}: iProps) {
 	return (
-		<div className="w-full flex flex-row gap-2 mb-4">
+		<div className="flex flex-row w-full gap-2 mb-4">
 			<div className="relative w-[168px] h-[94px] flex-none duration-300 hover:scale-[1.03]">
-				<Link to="/videos/1">
-					<img
-						src="https://i3.ytimg.com/vi/6O4s7v28nlw/maxresdefault.jpg"
-						className="object-cover"
-						alt="Some video title"
-					/>
+				<Link to={`/videos/${id}`}>
+					<img src={thumbnail} className="object-cover" alt={title} />
 				</Link>
-				<p className="absolute right-2 bottom-2 bg-gray-900 text-gray-100 text-xs px-1 py">
-					12:10
+				<p className="absolute px-1 text-xs text-gray-100 bg-gray-900 right-2 bottom-2 py">
+					{duration}
 				</p>
 			</div>
 
 			<div className="flex flex-col w-full">
-				<Link to="/videos/1">
-					<p className="text-slate-900 text-sm font-semibold">
-						Some video title
-					</p>
+				<Link to={`/videos/${id}`}>
+					<p className="text-sm font-semibold text-slate-900">{title}</p>
 				</Link>
-				<span className="text-gray-400 text-xs mt-2 hover:text-gray-600">
-					Learn with Sumit
+				<span className="mt-2 text-xs text-gray-400 hover:text-gray-600">
+					{author}
 				</span>
-				<p className="text-gray-400 text-xs mt-1">100K views . 23 Oct 2022</p>
+				<p className="mt-1 text-xs text-gray-400">
+					{views} views . {date}
+				</p>
 			</div>
 		</div>
 	);

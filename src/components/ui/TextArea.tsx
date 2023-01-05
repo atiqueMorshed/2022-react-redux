@@ -1,5 +1,7 @@
 type iProps = {
 	title: string;
+	value?: string;
+	onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
 const TextArea = ({ title, ...attributes }: iProps) => {

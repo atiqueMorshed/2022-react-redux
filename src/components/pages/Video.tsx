@@ -15,7 +15,26 @@ export default function Video() {
 		isLoading,
 		isError,
 		isSuccess,
-	} = useGetVideoQuery(videoId ? videoId : "no-valid-video-id");
+		error,
+	} = useGetVideoQuery(videoId as string);
+	// 	const {
+	// 	data: video,
+	// 	isLoading,
+	// 	isError,
+	// 	isSuccess,
+	// } = useGetVideoQuery(videoId as string, {
+	// 	skip: true, // true: skips initial automatic fetching, can change this manually to create a manual fetch. (2) false (default value): fetches automatically on initial load. Can set the value dynamically using useState to control fetching.
+	// 	/*
+	// 	refetchOnMountOrArgChange
+	// 	(1) true: Refetch if the component mounts (re-renders) or the component's arguments changes.
+	// 	(2) false: (default) doesn't refetch on mount or arg change.
+	// 	(3) number: (seconds) Only refetch on mount or arg change if number of seconds has passed.
+	// 	*/
+	// 	refetchOnMountOrArgChange: 5,
+	// 	refetchOnFocus: true, // Refetch when website window gets in focus. By default false.
+	// 	refetchOnReconnect: true, // Refetches if disconnected connection reconnects. By default false.
+	// 	pollingInterval: 3000, // In milliseconds. refetches in interval.
+	// });
 
 	let content = null;
 	if (isLoading) {
@@ -29,6 +48,7 @@ export default function Video() {
 
 	if (!isLoading && isError) {
 		content = <Error message="There was an error!" />;
+		console.log(error);
 	}
 
 	if (isSuccess && video?.id) {
@@ -49,7 +69,7 @@ export default function Video() {
 					</div>
 
 					{video?.id ? (
-						<RelatedVideos />
+						<RelatedVideos id={video.id} tags={video.tags} />
 					) : isLoading ? (
 						<>
 							<RelatedVideoLoader />
