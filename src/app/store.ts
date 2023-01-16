@@ -12,8 +12,8 @@ export const store = configureStore({
 		messages: messagesSlice,
 	},
 	devTools: process.env.NODE_ENV !== "production",
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(apiSlice.middleware),
+	middleware: (getDefaultMiddlewares) =>
+		getDefaultMiddlewares().concat(apiSlice.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

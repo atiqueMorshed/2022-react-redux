@@ -1,19 +1,31 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-type authState = {
-	value: number;
+type AuthStateType = {
+	accessToken?: string;
+	user?: {
+		email: string;
+		name: string;
+		id: number;
+	};
 };
 
-const initialState: authState = {
-	value: 0,
-};
+const initialState: AuthStateType = {};
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
-	reducers: {},
+	reducers: {
+		userLoggedIn: (state, action: PayloadAction<AuthStateType>) => {
+			state.accessToken = action.payload.accessToken;
+			state.user = action.payload.user;
+		},
+		userLoggedOut: (state) => {
+			state.accessToken = undefined;
+			state.user = undefined;
+		},
+	},
 });
 
-// export const {} = authSlice.actions;
+export const { userLoggedIn, userLoggedOut } = authSlice.actions;
 
 export default authSlice.reducer;
