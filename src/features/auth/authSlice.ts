@@ -1,21 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import { UserRegistrationReturnType } from "./auth.types";
 
-type AuthStateType = {
-	accessToken?: string;
-	user?: {
-		email: string;
-		name: string;
-		id: number;
-	};
-};
-
-const initialState: AuthStateType = {};
+const initialState: Partial<UserRegistrationReturnType> = {};
 
 const authSlice = createSlice({
 	name: "auth",
 	initialState,
 	reducers: {
-		userLoggedIn: (state, action: PayloadAction<AuthStateType>) => {
+		userLoggedIn: (
+			state,
+			action: PayloadAction<UserRegistrationReturnType>,
+		) => {
 			state.accessToken = action.payload.accessToken;
 			state.user = action.payload.user;
 		},
@@ -25,6 +21,8 @@ const authSlice = createSlice({
 		},
 	},
 });
+
+export const selectAuth = (state: RootState) => state.auth;
 
 export const { userLoggedIn, userLoggedOut } = authSlice.actions;
 

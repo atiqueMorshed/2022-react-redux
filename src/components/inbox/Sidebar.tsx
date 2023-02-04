@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ChatItems from "./ChatIItems";
+import ChatItems from "./ChatItems/ChatIItems";
 import Modal from "./Modal";
 // import Blank from "./Blank";
 
@@ -15,7 +15,7 @@ export default function Sidebar() {
 			<div className="h-[65px] text-center text-grey-500 p-4 border-b border-gray-300 flex md:justify-end justify-center">
 				<svg
 					viewBox="0 0 194.436 194.436"
-					className="w-5 h-5 text-grey-500 cursor-pointer"
+					className="w-5 h-5 cursor-pointer text-grey-500"
 					onClick={controlModal}
 				>
 					<path

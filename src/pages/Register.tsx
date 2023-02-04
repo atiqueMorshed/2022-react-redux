@@ -23,6 +23,7 @@ export default function Register() {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setFormError("");
 		if (password !== confirmPassword) setFormError("Passwords must match.");
 		else {
 			Register({ name, email, password });

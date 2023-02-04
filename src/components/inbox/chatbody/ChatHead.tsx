@@ -1,9 +1,9 @@
-import { UserType } from "../../../features/types";
+import { FullUserProfileType } from "../../../features/auth/auth.types";
 
 export default function ChatHead({
 	avatar,
 	name,
-}: Pick<UserType, "avatar" | "name">) {
+}: Pick<FullUserProfileType, "avatar" | "name">) {
 	return (
 		<div className="relative flex items-center p-3 border-b border-gray-300">
 			<img

@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
 import logoImage from "../../assets/images/logo-dark.svg";
+import { userLoggedOut } from "../../features/auth/authSlice";
 
 export default function Navigation() {
+	const dispatch = useAppDispatch();
+
+	const logout = () => {
+		dispatch(userLoggedOut());
+		localStorage.removeItem("chat-auth");
+	};
+
 	return (
 		<nav className="sticky top-0 z-40 transition-colors border-b border-general bg-violet-700">
 			<div className="mx-auto max-w-7xl">
@@ -11,7 +20,9 @@ export default function Navigation() {
 					</Link>
 					<ul>
 						<li className="text-white">
-							<a href="#">Logout</a>
+							<span className="cursor-pointer" onClick={logout}>
+								Logout
+							</span>
 						</li>
 					</ul>
 				</div>

@@ -1,12 +1,12 @@
 import apiSlice from "../api/apiSlice";
-import { UserRegistrationReturnType, UserType } from "../types";
+import { FullUserProfileType, UserRegistrationReturnType } from "./auth.types";
 import { userLoggedIn } from "./authSlice";
 
 const authApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		register: builder.mutation<
 			UserRegistrationReturnType,
-			Pick<UserType, "name" | "email" | "password">
+			Pick<FullUserProfileType, "name" | "email" | "password">
 		>({
 			query: (data) => ({
 				url: "/register",
@@ -37,7 +37,10 @@ const authApi = apiSlice.injectEndpoints({
 				}
 			},
 		}),
-		login: builder.mutation({
+		login: builder.mutation<
+			UserRegistrationReturnType,
+			Pick<FullUserProfileType, "email" | "password">
+		>({
 			query: (data) => ({
 				url: "/login",
 				method: "POST",
