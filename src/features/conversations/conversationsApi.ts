@@ -1,5 +1,8 @@
 import apiSlice from "../api/apiSlice";
-import { isValidSenderOrReceiverType } from "../messages/messages.type";
+import {
+	isValidMessageType,
+	isValidSenderOrReceiverType,
+} from "../messages/messages.type";
 import messagesApi from "../messages/messagesApi";
 import { EmailType } from "../types";
 import {
@@ -34,27 +37,63 @@ const conversationsApi = apiSlice.injectEndpoints({
 				body: data,
 			}),
 			async onQueryStarted(args, { dispatch, queryFulfilled }) {
-				const response = await queryFulfilled;
-				const { id, users, message, timestamp } = response.data;
+				try {
+					const response = await queryFulfilled;
+					const { id, users, message, timestamp } = response.data;
 
-				const sender = users.find((u) => u.email === args.senderEmail);
-				const receiver = users.find((u) => u.email !== args.senderEmail);
+					// Updates the conversations list by adding the new conversation to the Conversations list
+					// Pessimistic cache update start
+					console.log("01");
+					dispatch(
+						conversationsApi.util.updateQueryData(
+							"getConversations",
+							args.senderEmail,
+							(draft) => {
+								draft.push(response.data);
+							},
+						),
+					);
+					// Pessimistic cache update end
 
-				if (
-					isValidSenderOrReceiverType(sender) &&
-					isValidSenderOrReceiverType(receiver)
-				) {
-					setTimeout(() => {
-						dispatch(
-							messagesApi.endpoints.addMessage.initiate({
-								conversationId: id,
-								sender,
-								receiver,
-								message,
-								timestamp,
-							}),
-						);
-					}, 5000);
+					const sender = users.find((u) => u.email === args.senderEmail);
+					const receiver = users.find((u) => u.email !== args.senderEmail);
+
+					if (
+						isValidSenderOrReceiverType(sender) &&
+						isValidSenderOrReceiverType(receiver)
+					) {
+						const handleDispatch = async () => {
+							const response = await dispatch(
+								messagesApi.endpoints.addMessage.initiate({
+									conversationId: id,
+									sender,
+									receiver,
+									message,
+									timestamp,
+								}),
+							).unwrap();
+							// Updates the Messages list by adding the new message to Messages List
+							// Pessimistic cache update start
+							if (isValidMessageType(response)) {
+								console.log("02");
+								dispatch(
+									messagesApi.util.updateQueryData(
+										"getMessages",
+										response.conversationId.toString(),
+										(draft) => {
+											draft.push(response);
+										},
+									),
+								);
+							}
+							// Pessimistic cache update end
+						};
+						setTimeout(() => {
+							handleDispatch();
+						}, 500);
+					}
+				} catch (err: unknown) {
+					//
 				}
 			},
 		}),
@@ -70,27 +109,71 @@ const conversationsApi = apiSlice.injectEndpoints({
 				body: data,
 			}),
 			async onQueryStarted(args, { dispatch, queryFulfilled }) {
-				const response = await queryFulfilled;
-				const { id, users, message, timestamp } = response.data;
+				// Optimistic cache update start
 
-				const sender = users.find((u) => u.email === args.senderEmail);
-				const receiver = users.find((u) => u.email !== args.senderEmail);
+				const patchResultGetConversation = dispatch(
+					conversationsApi.util.updateQueryData(
+						"getConversations",
+						args.senderEmail,
+						(draft) => {
+							const draftConversation = draft.find((c) => c.id == args.id);
 
-				if (
-					isValidSenderOrReceiverType(sender) &&
-					isValidSenderOrReceiverType(receiver)
-				) {
-					setTimeout(() => {
-						dispatch(
-							messagesApi.endpoints.addMessage.initiate({
-								conversationId: id,
-								sender,
-								receiver,
-								message,
-								timestamp,
-							}),
-						);
-					}, 5000);
+							(draftConversation as ConversationType).message =
+								// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+								args.data.message!;
+							(draftConversation as ConversationType).timestamp =
+								// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+								args.data.timestamp!;
+						},
+					),
+				);
+				// Optimistic cache update end
+
+				try {
+					const response = await queryFulfilled;
+					const { id, users, message, timestamp } = response.data;
+
+					const sender = users.find((u) => u.email === args.senderEmail);
+					const receiver = users.find((u) => u.email !== args.senderEmail);
+
+					if (
+						isValidSenderOrReceiverType(sender) &&
+						isValidSenderOrReceiverType(receiver)
+					) {
+						const handleDispatch = async () => {
+							const response = await dispatch(
+								messagesApi.endpoints.addMessage.initiate({
+									conversationId: id,
+									sender,
+									receiver,
+									message,
+									timestamp,
+								}),
+							).unwrap();
+
+							if (isValidMessageType(response)) {
+								// Pessimistic cache update start
+								dispatch(
+									messagesApi.util.updateQueryData(
+										"getMessages",
+										response.conversationId.toString(),
+										(draft) => {
+											draft.push(response);
+										},
+									),
+								);
+								// Pessimistic cache update end
+							}
+						};
+
+						// This delay is required because json-server throws an error if there is no delay between requests.
+						setTimeout(() => {
+							handleDispatch();
+						}, 500);
+					}
+				} catch (err: unknown) {
+					// Optimistic cache  update UNDO on error
+					patchResultGetConversation.undo();
 				}
 			},
 		}),

@@ -3,7 +3,7 @@ import { MessagesType } from "./messages.type";
 
 const messagesApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		getMessages: builder.query<MessagesType, number | string>({
+		getMessages: builder.query<MessagesType, string | number>({
 			query: (id) =>
 				`/messages?conversationId=${id}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_MESSAGES_PER_PAGE}`,
 		}),

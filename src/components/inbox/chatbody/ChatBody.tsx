@@ -39,7 +39,11 @@ export default function ChatBody() {
 						name={chatHeadUser.name}
 					/>
 					<Messages messages={messages} user={user} />
-					<Options />
+					<Options
+						users={[user, chatHeadUser]}
+						conversationId={messages[0].conversationId}
+						senderEmail={user.email}
+					/>
 				</>
 			);
 		} else content = <div className="">No chat history found.</div>;

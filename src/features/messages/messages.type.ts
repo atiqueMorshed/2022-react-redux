@@ -17,7 +17,19 @@ export type MessageType = {
 
 export type MessagesType = MessageType[];
 
-export type SenderOrReceiverType = Pick<MessageType, "sender">;
+export type SenderOrReceiverType = {
+	email: string;
+	name: string;
+	id: number;
+};
+
+export const isValidMessageType = (
+	message: unknown,
+): message is MessageType => {
+	if (message !== null && typeof message === "object" && "id" in message)
+		return true;
+	return false;
+};
 
 export const isValidMessagesType = (
 	messages: unknown,
@@ -26,9 +38,9 @@ export const isValidMessagesType = (
 		messages !== null &&
 		Array.isArray(messages) &&
 		messages?.length > 0 &&
-		typeof messages[0] === "object"
+		isValidMessageType(messages[0])
 	)
-		return "id" in messages[0];
+		return true;
 	return false;
 };
 

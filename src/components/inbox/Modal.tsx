@@ -60,7 +60,6 @@ export default function Modal({ open, control }: iProps) {
 			isSuccess: isAddConversationSuccess,
 			isError: isAddConversationError,
 			error: addConversationError,
-			status,
 		},
 	] = useAddConversationMutation();
 	const [
@@ -159,6 +158,18 @@ export default function Modal({ open, control }: iProps) {
 				id: conversation[0].id,
 				senderEmail: participant[0].email,
 				data: {
+					users: [
+						{
+							id: loggedInUser.id,
+							name: loggedInUser.name,
+							email: loggedInUser.email,
+						},
+						{
+							id: participant[0].id,
+							name: participant[0].name,
+							email: participant[0].email,
+						},
+					],
 					message,
 					timestamp: new Date().getTime(),
 				},
