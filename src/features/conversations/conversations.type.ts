@@ -21,6 +21,11 @@ export type ConversationType = {
 
 export type ReceivedConversationType = [ConversationType];
 
+export type ReceivedConversationsType = {
+	conversations: ConversationsType;
+	totalConversationsCount: number;
+};
+
 export type iPropsGetConversation = {
 	userEmail: EmailType;
 	participantEmail: EmailType;
@@ -55,5 +60,29 @@ export const isValidReceivedConversationType = (
 	conv: unknown,
 ): conv is ReceivedConversationType => {
 	if (Array.isArray(conv) && isValidConversationType(conv)) return true;
+	return false;
+};
+export const isValidConversationsType = (
+	conv: unknown,
+): conv is ConversationsType => {
+	return (
+		Array.isArray(conv) &&
+		conv?.length > 0 &&
+		typeof conv[0] === "object" &&
+		"id" in conv[0]
+	);
+};
+
+export const isValidReceivedConversationsType = (
+	data: unknown,
+): data is ReceivedConversationsType => {
+	if (
+		data &&
+		typeof data === "object" &&
+		"conversations" in data &&
+		isValidConversationsType(data.conversations)
+	) {
+		return true;
+	}
 	return false;
 };

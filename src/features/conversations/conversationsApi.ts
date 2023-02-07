@@ -1,3 +1,4 @@
+import { io } from "socket.io-client";
 import apiSlice from "../api/apiSlice";
 import {
 	isValidMessageType,
@@ -9,6 +10,7 @@ import {
 	ConversationType,
 	ConversationsType,
 	ReceivedConversationType,
+	ReceivedConversationsType,
 	iPropsAddConversation,
 	iPropsEditConversation,
 	iPropsGetConversation,
@@ -16,9 +18,112 @@ import {
 
 const conversationsApi = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
-		getConversations: builder.query<ConversationsType, EmailType>({
+		getConversations: builder.query<ReceivedConversationsType, EmailType>({
 			query: (email) =>
 				`/conversations?participants_like=${email}&_sort=timestamp&_order=desc&_page=1&_limit=${process.env.REACT_APP_CONVERSATIONS_PER_PAGE}`,
+
+			transformResponse(responseData: ConversationsType, meta) {
+				const totalConversationsCount =
+					meta?.response?.headers.get("X-Total-Count");
+				return {
+					conversations: responseData,
+					totalConversationsCount: totalConversationsCount
+						? parseInt(totalConversationsCount)
+						: -1,
+				};
+			},
+			async onCacheEntryAdded(
+				args,
+				{ cacheDataLoaded, updateCachedData, cacheEntryRemoved },
+			) {
+				// Create the socket
+				const socket = io(`${process.env.REACT_APP_API_URL}`, {
+					reconnectionDelay: 1000,
+					reconnection: true,
+					reconnectionAttempts: 10,
+					transports: ["websocket"],
+					agent: false,
+					upgrade: false,
+					rejectUnauthorized: false,
+				});
+
+				try {
+					await cacheDataLoaded;
+					// Here, the first parameter is the name of the socket on server that we are listening for
+					socket.on("conversations", (data: { data: ConversationType }) => {
+						updateCachedData((draft) => {
+							const conversationIndex = draft.conversations.findIndex(
+								(c) => c.id == data.data.id,
+							);
+
+							if (conversationIndex !== -1) {
+								draft.conversations[conversationIndex].message =
+									data.data.message;
+								draft.conversations[conversationIndex].timestamp =
+									data.data.timestamp;
+
+								const firstConversation = draft.conversations[0];
+								draft.conversations[0] = draft.conversations[conversationIndex];
+								draft.conversations[conversationIndex] = firstConversation;
+
+								// if (conversation?.id) {
+								// 	const newDraftConversations = draft.conversations.filter(
+								// 		(c) => c.id !== conversation.id,
+								// 	);
+
+								// 	conversation.message = data.data.message;
+								// 	conversation.timestamp = data.data.timestamp;
+								// 	newDraftConversations.push(conversation);
+								// 	draft.conversations = newDraftConversations;
+							} else {
+								// This means no conversation exists. So, we do nothing in this case.
+							}
+						});
+					});
+				} catch (err: unknown) {
+					//
+				}
+				// awaiting cacheEntryRemove means the cache entry has been removed from the cache,
+				// by not being used/subscribed to any more in the application for too long
+				// or by dispatching api.util.resetApiState
+				await cacheEntryRemoved;
+				// In this case, we close our socket connection.
+				socket.close();
+			},
+		}),
+		getExtraConversationsOnScroll: builder.query<
+			ConversationsType,
+			{ email: EmailType; page: number }
+		>({
+			query: ({ email, page }) =>
+				`/conversations?participants_like=${email}&_sort=timestamp&_order=desc&_page=${page}&_limit=${process.env.REACT_APP_CONVERSATIONS_PER_PAGE}`,
+
+			async onQueryStarted({ email }, { queryFulfilled, dispatch }) {
+				try {
+					const newConversations = await queryFulfilled;
+
+					// Pessimistic cache update start
+					if (newConversations) {
+						dispatch(
+							conversationsApi.util.updateQueryData(
+								"getConversations",
+								email,
+								(draft) => {
+									if (draft.conversations.length > 0) {
+										draft.conversations = [
+											...draft.conversations,
+											...newConversations.data,
+										];
+									}
+								},
+							),
+						);
+					}
+					// Pessimistic cache update end
+				} catch (err: unknown) {
+					//
+				}
+			},
 		}),
 
 		getConversation: builder.query<
@@ -43,13 +148,13 @@ const conversationsApi = apiSlice.injectEndpoints({
 
 					// Updates the conversations list by adding the new conversation to the Conversations list
 					// Pessimistic cache update start
-					console.log("01");
+
 					dispatch(
 						conversationsApi.util.updateQueryData(
 							"getConversations",
 							args.senderEmail,
 							(draft) => {
-								draft.push(response.data);
+								draft.conversations.push(response.data);
 							},
 						),
 					);
@@ -75,7 +180,6 @@ const conversationsApi = apiSlice.injectEndpoints({
 							// Updates the Messages list by adding the new message to Messages List
 							// Pessimistic cache update start
 							if (isValidMessageType(response)) {
-								console.log("02");
 								dispatch(
 									messagesApi.util.updateQueryData(
 										"getMessages",
@@ -116,7 +220,9 @@ const conversationsApi = apiSlice.injectEndpoints({
 						"getConversations",
 						args.senderEmail,
 						(draft) => {
-							const draftConversation = draft.find((c) => c.id == args.id);
+							const draftConversation = draft.conversations.find(
+								(c) => c.id == args.id,
+							);
 
 							(draftConversation as ConversationType).message =
 								// eslint-disable-next-line @typescript-eslint/no-non-null-assertion

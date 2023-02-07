@@ -134,7 +134,7 @@ export default function Modal({ open, control }: iProps) {
 		}
 		if (conversation.length === 0) {
 			addConversation({
-				senderEmail: participant[0].email,
+				senderEmail: loggedInUser.email,
 				data: {
 					participants: `${loggedInUser.email}-${participant[0].email}`,
 					users: [
@@ -156,7 +156,7 @@ export default function Modal({ open, control }: iProps) {
 		} else {
 			editConversation({
 				id: conversation[0].id,
-				senderEmail: participant[0].email,
+				senderEmail: loggedInUser.email,
 				data: {
 					users: [
 						{
