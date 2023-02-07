@@ -20,6 +20,7 @@ export const isErrorWithMessage = (
 		typeof error === "object" &&
 		error !== null &&
 		"message" in error &&
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		typeof (error as any).message === "string"
 	);
 };

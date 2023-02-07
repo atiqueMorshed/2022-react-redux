@@ -100,7 +100,7 @@ export default function Modal({ open, control }: iProps) {
 
 	useEffect(() => {
 		if (isAddConversationSuccess || isEditConversationSuccess) control();
-	}, [isAddConversationSuccess, isEditConversationSuccess, control]);
+	}, [isAddConversationSuccess, isEditConversationSuccess]);
 
 	const searchEmail = (value: string) => {
 		if (isValidEmail(value)) {

@@ -33,7 +33,7 @@ const conversationsApi = apiSlice.injectEndpoints({
 				};
 			},
 			async onCacheEntryAdded(
-				args,
+				email,
 				{ cacheDataLoaded, updateCachedData, cacheEntryRemoved },
 			) {
 				// Create the socket
@@ -61,22 +61,17 @@ const conversationsApi = apiSlice.injectEndpoints({
 									data.data.message;
 								draft.conversations[conversationIndex].timestamp =
 									data.data.timestamp;
+								const removedConversation = draft.conversations.splice(
+									conversationIndex,
+									1,
+								);
 
-								const firstConversation = draft.conversations[0];
-								draft.conversations[0] = draft.conversations[conversationIndex];
-								draft.conversations[conversationIndex] = firstConversation;
-
-								// if (conversation?.id) {
-								// 	const newDraftConversations = draft.conversations.filter(
-								// 		(c) => c.id !== conversation.id,
-								// 	);
-
-								// 	conversation.message = data.data.message;
-								// 	conversation.timestamp = data.data.timestamp;
-								// 	newDraftConversations.push(conversation);
-								// 	draft.conversations = newDraftConversations;
+								draft.conversations.unshift(...removedConversation);
 							} else {
 								// This means no conversation exists. So, we do nothing in this case.
+								if (data.data.participants.includes(email)) {
+									draft.conversations.unshift(data.data);
+								}
 							}
 						});
 					});
@@ -103,18 +98,16 @@ const conversationsApi = apiSlice.injectEndpoints({
 					const newConversations = await queryFulfilled;
 
 					// Pessimistic cache update start
-					if (newConversations) {
+					if (newConversations?.data?.length > 0) {
 						dispatch(
 							conversationsApi.util.updateQueryData(
 								"getConversations",
 								email,
 								(draft) => {
-									if (draft.conversations.length > 0) {
-										draft.conversations = [
-											...draft.conversations,
-											...newConversations.data,
-										];
-									}
+									draft.conversations = [
+										...draft.conversations,
+										...newConversations.data,
+									];
 								},
 							),
 						);
@@ -144,57 +137,32 @@ const conversationsApi = apiSlice.injectEndpoints({
 			async onQueryStarted(args, { dispatch, queryFulfilled }) {
 				try {
 					const response = await queryFulfilled;
-					const { id, users, message, timestamp } = response.data;
+					const conversation = response.data || {};
 
-					// Updates the conversations list by adding the new conversation to the Conversations list
-					// Pessimistic cache update start
+					if ("id" in conversation) {
+						const { id, users, message, timestamp } = conversation;
+						const sender = users.find((u) => u.email === args.senderEmail);
+						const receiver = users.find((u) => u.email !== args.senderEmail);
 
-					dispatch(
-						conversationsApi.util.updateQueryData(
-							"getConversations",
-							args.senderEmail,
-							(draft) => {
-								draft.conversations.push(response.data);
-							},
-						),
-					);
-					// Pessimistic cache update end
-
-					const sender = users.find((u) => u.email === args.senderEmail);
-					const receiver = users.find((u) => u.email !== args.senderEmail);
-
-					if (
-						isValidSenderOrReceiverType(sender) &&
-						isValidSenderOrReceiverType(receiver)
-					) {
-						const handleDispatch = async () => {
-							const response = await dispatch(
-								messagesApi.endpoints.addMessage.initiate({
-									conversationId: id,
-									sender,
-									receiver,
-									message,
-									timestamp,
-								}),
-							).unwrap();
-							// Updates the Messages list by adding the new message to Messages List
-							// Pessimistic cache update start
-							if (isValidMessageType(response)) {
-								dispatch(
-									messagesApi.util.updateQueryData(
-										"getMessages",
-										response.conversationId.toString(),
-										(draft) => {
-											draft.push(response);
-										},
-									),
+						if (
+							isValidSenderOrReceiverType(sender) &&
+							isValidSenderOrReceiverType(receiver)
+						) {
+							const handleDispatch = async () => {
+								await dispatch(
+									messagesApi.endpoints.addMessage.initiate({
+										conversationId: id,
+										sender,
+										receiver,
+										message,
+										timestamp,
+									}),
 								);
-							}
-							// Pessimistic cache update end
-						};
-						setTimeout(() => {
-							handleDispatch();
-						}, 500);
+							};
+							setTimeout(() => {
+								handleDispatch();
+							}, 500);
+						}
 					}
 				} catch (err: unknown) {
 					//

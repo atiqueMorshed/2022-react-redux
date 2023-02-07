@@ -8,6 +8,7 @@ import { userLoggedOut } from "../auth/authSlice";
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: process.env.REACT_APP_API_URL,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	prepareHeaders: async (headers, { getState, endpoint }) => {
 		// endpoint is the string that contains the current url. We can use that to conditionally set headers for set urls
 
@@ -40,6 +41,7 @@ const apiSlice = createApi({
 		}
 		return result;
 	},
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	endpoints: (builder) => ({}),
 });
 

@@ -131,6 +131,18 @@
       "password": "$2a$10$fZ4.zyLBuAzdYprvsFbSG.Q6/ah2/SVh/pqYOQuveuTMLV/rOmlTO",
       "name": "tracer",
       "id": 22
+    },
+    {
+      "email": "iq@gmail.com",
+      "password": "$2a$10$fZ4.zyLBuAzdYprvsFbSG.Q6/ah2/SVh/pqYOQuveuTMLV/rOmlTO",
+      "name": "IQ",
+      "id": 23
+    },
+    {
+      "email": "gg@gmail.com",
+      "password": "$2a$10$fZ4.zyLBuAzdYprvsFbSG.Q6/ah2/SVh/pqYOQuveuTMLV/rOmlTO",
+      "name": "GG",
+      "id": 24
     }
   ],
   "conversations": [
@@ -282,18 +294,18 @@
       "participants": "abdul@gmail.com-solis@gmail.com",
       "users": [
         {
-          "id": 1,
+          "email": "abdul@gmail.com",
           "name": "Abdul Bari",
-          "email": "abdul@gmail.com"
+          "id": 1
         },
         {
-          "id": 9,
+          "email": "solis@gmail.com",
           "name": "Solis",
-          "email": "solis@gmail.com"
+          "id": 9
         }
       ],
-      "message": "keepSold",
-      "timestamp": 1675652248391,
+      "message": "lol",
+      "timestamp": 1675748068112,
       "id": 9
     },
     {
@@ -472,8 +484,8 @@
           "email": "pharah@gmail.com"
         }
       ],
-      "message": "mamu",
-      "timestamp": 1675690951938,
+      "message": "bolo ree",
+      "timestamp": 1675756285487,
       "id": 19
     },
     {
@@ -516,19 +528,37 @@
       "participants": "abdul@gmail.com-tracer@gmail.com",
       "users": [
         {
+          "email": "abdul@gmail.com",
+          "name": "Abdul Bari",
+          "id": 1
+        },
+        {
+          "email": "tracer@gmail.com",
+          "name": "tracer",
+          "id": 22
+        }
+      ],
+      "message": "LOL",
+      "timestamp": 1675752524774,
+      "id": 22
+    },
+    {
+      "participants": "abdul@gmail.com-iq@gmail.com",
+      "users": [
+        {
+          "email": "iq@gmail.com",
+          "name": "IQ",
+          "id": 23
+        },
+        {
           "id": 1,
           "name": "Abdul Bari",
           "email": "abdul@gmail.com"
-        },
-        {
-          "id": 22,
-          "name": "tracer",
-          "email": "tracer@gmail.com"
         }
       ],
-      "message": "XDD",
-      "timestamp": 1675689967211,
-      "id": 22
+      "message": "lol",
+      "timestamp": 1675760759263,
+      "id": 23
     }
   ],
   "messages": [
@@ -2051,6 +2081,230 @@
       "message": "lol",
       "timestamp": 1675690959495,
       "id": 95
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "oore",
+      "timestamp": 1675747667203,
+      "id": 96
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "XD",
+      "timestamp": 1675747694899,
+      "id": 97
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "LOL",
+      "timestamp": 1675747734787,
+      "id": 98
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "mamu",
+      "timestamp": 1675747806778,
+      "id": 99
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "kire",
+      "timestamp": 1675747979080,
+      "id": 100
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "stfu",
+      "timestamp": 1675748013594,
+      "id": 101
+    },
+    {
+      "conversationId": 9,
+      "sender": {
+        "email": "abdul@gmail.com",
+        "name": "Abdul Bari",
+        "id": 1
+      },
+      "receiver": {
+        "email": "solis@gmail.com",
+        "name": "Solis",
+        "id": 9
+      },
+      "message": "lol",
+      "timestamp": 1675748068112,
+      "id": 102
+    },
+    {
+      "conversationId": 22,
+      "sender": {
+        "email": "tracer@gmail.com",
+        "name": "tracer",
+        "id": 22
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "mamu",
+      "timestamp": 1675752503532,
+      "id": 103
+    },
+    {
+      "conversationId": 22,
+      "sender": {
+        "email": "tracer@gmail.com",
+        "name": "tracer",
+        "id": 22
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "XD",
+      "timestamp": 1675752512697,
+      "id": 104
+    },
+    {
+      "conversationId": 22,
+      "sender": {
+        "email": "abdul@gmail.com",
+        "name": "Abdul Bari",
+        "id": 1
+      },
+      "receiver": {
+        "email": "tracer@gmail.com",
+        "name": "tracer",
+        "id": 22
+      },
+      "message": "LOL",
+      "timestamp": 1675752524774,
+      "id": 105
+    },
+    {
+      "conversationId": 19,
+      "sender": {
+        "id": 19,
+        "name": "Pharah",
+        "email": "pharah@gmail.com"
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "mamaaaa",
+      "timestamp": 1675756276671,
+      "id": 106
+    },
+    {
+      "conversationId": 19,
+      "sender": {
+        "email": "abdul@gmail.com",
+        "name": "Abdul Bari",
+        "id": 1
+      },
+      "receiver": {
+        "id": 19,
+        "name": "Pharah",
+        "email": "pharah@gmail.com"
+      },
+      "message": "bolo ree",
+      "timestamp": 1675756285487,
+      "id": 107
+    },
+    {
+      "conversationId": 23,
+      "sender": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "receiver": {
+        "id": 23,
+        "name": "IQ",
+        "email": "iq@gmail.com"
+      },
+      "message": "kire\n",
+      "timestamp": 1675760753189,
+      "id": 108
+    },
+    {
+      "conversationId": 23,
+      "sender": {
+        "email": "iq@gmail.com",
+        "name": "IQ",
+        "id": 23
+      },
+      "receiver": {
+        "id": 1,
+        "name": "Abdul Bari",
+        "email": "abdul@gmail.com"
+      },
+      "message": "lol",
+      "timestamp": 1675760759263,
+      "id": 109
     }
   ]
 }
