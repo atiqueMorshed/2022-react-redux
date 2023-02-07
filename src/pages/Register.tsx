@@ -19,7 +19,7 @@ export default function Register() {
 	useEffect(() => {
 		if (isSuccess) navigate("/inbox");
 		if (isError) setFormError("There was an unexpected error.");
-	}, [isSuccess, isError]);
+	}, [isSuccess, isError, navigate]);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
